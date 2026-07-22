@@ -65,10 +65,10 @@ function nightsBetween($checkIn, $checkOut) {
 function getCities() {
     return [
         ['name' => 'Karachi', 'image' => 'https://images.pexels.com/photos/2699348/pexels-photo-2699348.jpeg', 'count' => 24],
-        ['name' => 'Lahore', 'image' => 'https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg', 'count' => 18],
-        ['name' => 'Islamabad', 'image' => 'https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg', 'count' => 15],
-        ['name' => 'Hunza', 'image' => 'https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg', 'count' => 12],
-        ['name' => 'Murree', 'image' => 'https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg', 'count' => 9],
+        ['name' => 'Lahore', 'image' => 'https://images.pexels.com/photos/2029722/pexels-photo-2029722.jpeg', 'count' => 18],
+        ['name' => 'Islamabad', 'image' => 'https://images.pexels.com/photos/3225531/pexels-photo-3225531.jpeg', 'count' => 15],
+        ['name' => 'Hunza', 'image' => 'https://images.pexels.com/photos/2422259/pexels-photo-2422259.jpeg', 'count' => 12],
+        ['name' => 'Murree', 'image' => 'https://images.pexels.com/photos/247204/pexels-photo-247204.jpeg', 'count' => 9],
         ['name' => 'Skardu', 'image' => 'https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg', 'count' => 7],
     ];
 }

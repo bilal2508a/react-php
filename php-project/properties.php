@@ -11,7 +11,6 @@ $maxPrice = $_GET['maxPrice'] ?? '';
 $bedrooms = $_GET['bedrooms'] ?? '';
 $guests = $_GET['guests'] ?? '';
 $featured = $_GET['featured'] ?? '';
-$amenitiesFilter = $_GET['amenities'] ?? '';
 
 // Build WHERE clause
 $where = [];
@@ -51,20 +50,6 @@ $stmt = db()->prepare("SELECT * FROM properties $whereClause ORDER BY is_feature
 $stmt->execute($params);
 $properties = $stmt->fetchAll();
 
-// Filter amenities in PHP
-if ($amenitiesFilter) {
-    $filterAmenities = explode(',', $amenitiesFilter);
-    $properties = array_filter($properties, function($p) use ($filterAmenities) {
-        $propAmenities = explode(',', $p['amenities']);
-        foreach ($filterAmenities as $fa) {
-            if (!in_array(trim($fa), $propAmenities)) {
-                return false;
-            }
-        }
-        return true;
-    });
-}
-
 // AI Recommendations - score properties
 $aiRecommendations = [];
 foreach ($properties as $p) {
@@ -83,7 +68,6 @@ $topRecommendations = array_slice($aiRecommendations, 0, 3);
 
 $cities = getCities();
 $propertyTypes = getPropertyTypes();
-$allAmenities = getAllAmenities();
 ?>
 
 <main class="pt-nav">
@@ -101,10 +85,10 @@ $allAmenities = getAllAmenities();
                 <div class="col-lg-3 mb-4">
                     <div class="card p-4" id="filterSidebar">
                         <h5 class="fw-bold mb-3"><i class="bi bi-funnel"></i> Filters</h5>
-                        <form method="GET" action="<?php echo url('/properties.php'); ?>">
+                        <form method="GET" action="<?php echo url('/properties.php'); ?>" id="filterForm">
                             <div class="mb-3">
                                 <label class="label">City</label>
-                                <select name="city" class="input">
+                                <select name="city" class="input" onchange="document.getElementById('filterForm').submit()">
                                     <option value="">All Cities</option>
                                     <?php foreach ($cities as $c): ?>
                                         <option value="<?php echo e($c['name']); ?>" <?php echo $city === $c['name'] ? 'selected' : ''; ?>><?php echo e($c['name']); ?></option>
@@ -113,7 +97,7 @@ $allAmenities = getAllAmenities();
                             </div>
                             <div class="mb-3">
                                 <label class="label">Property Type</label>
-                                <select name="type" class="input">
+                                <select name="type" class="input" onchange="document.getElementById('filterForm').submit()">
                                     <option value="">All Types</option>
                                     <?php foreach ($propertyTypes as $pt): ?>
                                         <option value="<?php echo e($pt['value']); ?>" <?php echo $type === $pt['value'] ? 'selected' : ''; ?>><?php echo e($pt['label']); ?></option>
@@ -123,16 +107,16 @@ $allAmenities = getAllAmenities();
                             <div class="row g-2 mb-3">
                                 <div class="col-6">
                                     <label class="label">Min Price</label>
-                                    <input type="number" name="minPrice" class="input" value="<?php echo e($minPrice); ?>" placeholder="0">
+                                    <input type="number" name="minPrice" class="input" value="<?php echo e($minPrice); ?>" placeholder="0" onchange="document.getElementById('filterForm').submit()">
                                 </div>
                                 <div class="col-6">
                                     <label class="label">Max Price</label>
-                                    <input type="number" name="maxPrice" class="input" value="<?php echo e($maxPrice); ?>" placeholder="50000">
+                                    <input type="number" name="maxPrice" class="input" value="<?php echo e($maxPrice); ?>" placeholder="50000" onchange="document.getElementById('filterForm').submit()">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="label">Min Bedrooms</label>
-                                <select name="bedrooms" class="input">
+                                <select name="bedrooms" class="input" onchange="document.getElementById('filterForm').submit()">
                                     <option value="">Any</option>
                                     <option value="1" <?php echo $bedrooms === '1' ? 'selected' : ''; ?>>1+</option>
                                     <option value="2" <?php echo $bedrooms === '2' ? 'selected' : ''; ?>>2+</option>
@@ -142,7 +126,7 @@ $allAmenities = getAllAmenities();
                             </div>
                             <div class="mb-3">
                                 <label class="label">Min Guests</label>
-                                <select name="guests" class="input">
+                                <select name="guests" class="input" onchange="document.getElementById('filterForm').submit()">
                                     <option value="">Any</option>
                                     <option value="2" <?php echo $guests === '2' ? 'selected' : ''; ?>>2+</option>
                                     <option value="4" <?php echo $guests === '4' ? 'selected' : ''; ?>>4+</option>
@@ -151,22 +135,10 @@ $allAmenities = getAllAmenities();
                             </div>
                             <div class="mb-3">
                                 <label class="label">Featured Only</label>
-                                <select name="featured" class="input">
+                                <select name="featured" class="input" onchange="document.getElementById('filterForm').submit()">
                                     <option value="">All Properties</option>
                                     <option value="1" <?php echo $featured === '1' ? 'selected' : ''; ?>>Featured Only</option>
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="label">Amenities</label>
-                                <input type="hidden" name="amenities" id="amenitiesFilter" value="<?php echo e($amenitiesFilter); ?>">
-                                <div class="d-flex flex-wrap gap-2">
-                                    <?php foreach ($allAmenities as $am): ?>
-                                        <?php $selected = in_array($am, explode(',', $amenitiesFilter)); ?>
-                                        <span class="amenity-chip <?php echo $selected ? 'selected' : ''; ?>" data-amenity="<?php echo e($am); ?>" onclick="toggleAmenity('<?php echo e($am); ?>', this)" style="padding:4px 10px;border-radius:20px;font-size:0.75rem;cursor:pointer;border:1px solid var(--slate-200);<?php echo $selected ? 'background:var(--primary-500);color:#fff;' : 'background:#fff;color:var(--slate-600);'; ?>">
-                                            <?php echo e($am); ?>
-                                        </span>
-                                    <?php endforeach; ?>
-                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Apply Filters</button>
                             <a href="<?php echo url('/properties.php'); ?>" class="btn btn-ghost w-100 mt-2">Clear All</a>
@@ -199,7 +171,7 @@ $allAmenities = getAllAmenities();
                     <?php endif; ?>
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="fw-bold mb-0"><?php echo count($properties); ?> Properties Found</h5>
+                        <h5 class="fw-bold mb-0"><span id="visibleCount">6</span> of <?php echo count($properties); ?> Properties Found</h5>
                         <button onclick="toggleFilters()" class="btn btn-ghost d-lg-none"><i class="bi bi-funnel"></i> Filters</button>
                     </div>
 
@@ -211,21 +183,47 @@ $allAmenities = getAllAmenities();
                             <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary">Clear Filters</a>
                         </div>
                     <?php else: ?>
-                        <div class="row g-4">
-                            <?php foreach ($properties as $p): ?>
-                                <div class="col-md-6 col-xl-4">
+                        <div class="row g-4" id="propertyGrid">
+                            <?php foreach ($properties as $i => $p): ?>
+                                <div class="col-md-6 col-xl-4 property-item" data-index="<?php echo $i; ?>" <?php echo $i >= 6 ? 'style="display:none;"' : ''; ?>>
                                     <?php include __DIR__ . '/includes/property_card.php'; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                        <?php if (count($properties) > 6): ?>
                         <div class="text-center mt-4">
-                            <button class="btn btn-ghost btn-lg" id="loadMoreBtn">Load More Properties</button>
+                            <button class="btn btn-primary btn-lg" id="loadMoreBtn" onclick="loadMore()">
+                                <i class="bi bi-arrow-down-circle"></i> Load More Properties
+                            </button>
                         </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
 </main>
+
+<script>
+var visibleCount = 6;
+var totalProperties = <?php echo count($properties); ?>;
+
+function loadMore() {
+    var items = document.querySelectorAll('.property-item');
+    var newlyShown = 0;
+    items.forEach(function(item) {
+        if (item.style.display === 'none' && newlyShown < 6) {
+            item.style.display = '';
+            newlyShown++;
+        }
+    });
+    visibleCount += newlyShown;
+    document.getElementById('visibleCount').textContent = visibleCount;
+
+    if (visibleCount >= totalProperties) {
+        document.getElementById('loadMoreBtn').style.display = 'none';
+    }
+}
+</script>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

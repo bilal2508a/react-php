@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/includes/header.php';
 
 $contactCards = [
-    ['icon' => 'bi-geo-alt', 'title' => 'Address', 'value' => 'Main Boulevard, Gulberg III, Lahore, Pakistan'],
-    ['icon' => 'bi-envelope', 'title' => 'Email', 'value' => 'hello@mehmaanhub.pk'],
-    ['icon' => 'bi-phone', 'title' => 'Phone', 'value' => '+92 300 1234567'],
-    ['icon' => 'bi-clock', 'title' => 'Hours', 'value' => 'Mon - Sat: 9AM - 9PM'],
+    ['icon' => 'bi-geo-alt', 'title' => 'Visit Us', 'value' => 'Main Boulevard, Gulberg III, Lahore, Pakistan', 'bg' => '#e0f2fe', 'color' => '#0284c7'],
+    ['icon' => 'bi-envelope', 'title' => 'Email Us', 'value' => 'hello@mehmaanhub.pk', 'bg' => '#ffedd5', 'color' => '#ea580c'],
+    ['icon' => 'bi-phone', 'title' => 'Call Us', 'value' => '+92 300 1234567', 'bg' => '#dcfce7', 'color' => '#16a34a'],
+    ['icon' => 'bi-clock', 'title' => 'Working Hours', 'value' => 'Mon - Sat: 9AM - 9PM', 'bg' => '#fef9c3', 'color' => '#ca8a04'],
 ];
 ?>
 
@@ -47,8 +47,8 @@ $contactCards = [
                 <?php foreach ($contactCards as $card): ?>
                     <div class="col-md-6 col-lg-3">
                         <div class="card p-4 text-center h-100">
-                            <div class="d-flex align-items-center justify-content-center mx-auto mb-3" style="width:56px;height:56px;border-radius:14px;background:var(--primary-100);">
-                                <i class="bi <?php echo e($card['icon']); ?>" style="font-size:1.5rem;color:var(--primary-600);"></i>
+                            <div class="d-flex align-items-center justify-content-center mx-auto mb-3" style="width:56px;height:56px;border-radius:14px;background:<?php echo e($card['bg']); ?>;">
+                                <i class="bi <?php echo e($card['icon']); ?>" style="font-size:1.5rem;color:<?php echo e($card['color']); ?>;"></i>
                             </div>
                             <h6 style="font-weight:700;"><?php echo e($card['title']); ?></h6>
                             <p style="color:var(--slate-500);font-size:0.85rem;margin:0;"><?php echo e($card['value']); ?></p>
