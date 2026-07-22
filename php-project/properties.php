@@ -101,7 +101,7 @@ $allAmenities = getAllAmenities();
                 <div class="col-lg-3 mb-4">
                     <div class="card p-4" id="filterSidebar">
                         <h5 class="fw-bold mb-3"><i class="bi bi-funnel"></i> Filters</h5>
-                        <form method="GET" action="/properties.php">
+                        <form method="GET" action="<?php echo url('/properties.php'); ?>">
                             <div class="mb-3">
                                 <label class="label">City</label>
                                 <select name="city" class="input">
@@ -169,7 +169,7 @@ $allAmenities = getAllAmenities();
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Apply Filters</button>
-                            <a href="/properties.php" class="btn btn-ghost w-100 mt-2">Clear All</a>
+                            <a href="<?php echo url('/properties.php'); ?>" class="btn btn-ghost w-100 mt-2">Clear All</a>
                         </form>
                     </div>
                 </div>
@@ -190,7 +190,7 @@ $allAmenities = getAllAmenities();
                                         <h6 style="font-weight:700;font-size:0.9rem;" class="line-clamp-1"><?php echo e($rec['property']['title']); ?></h6>
                                         <p style="font-size:0.8rem;color:var(--slate-500);" class="line-clamp-1"><i class="bi bi-geo-alt"></i> <?php echo e($rec['property']['city']); ?></p>
                                         <p style="font-weight:700;color:var(--primary-600);"><?php echo formatPKR($rec['property']['price_per_night']); ?></p>
-                                        <a href="/property-details.php?id=<?php echo (int)$rec['property']['id']; ?>" class="btn btn-primary btn-sm">View</a>
+                                        <a href="<?php echo url('/property-details.php?id=' . (int)$rec['property']['id']); ?>" class="btn btn-primary btn-sm">View</a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -208,7 +208,7 @@ $allAmenities = getAllAmenities();
                             <i class="bi bi-search" style="font-size:3rem;color:var(--slate-300);"></i>
                             <h5 class="mt-3">No properties found</h5>
                             <p style="color:var(--slate-500);">Try adjusting your filters</p>
-                            <a href="/properties.php" class="btn btn-primary">Clear Filters</a>
+                            <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary">Clear Filters</a>
                         </div>
                     <?php else: ?>
                         <div class="row g-4">

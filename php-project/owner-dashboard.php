@@ -121,8 +121,8 @@ require_once __DIR__ . '/includes/header.php';
                                     </div>
                                     <div class="col-md-2 text-end">
                                         <?php if ($b['owner_status'] === 'pending'): ?>
-                                            <a href="/api/booking-action.php?id=<?php echo (int)$b['id']; ?>&action=approve" class="btn btn-success btn-sm"><i class="bi bi-check"></i></a>
-                                            <a href="/api/booking-action.php?id=<?php echo (int)$b['id']; ?>&action=reject" class="btn btn-error btn-sm"><i class="bi bi-x"></i></a>
+                                            <a href="<?php echo url('/api/booking-action.php?id=' . (int)$b['id'] . '&action=approve'); ?>" class="btn btn-success btn-sm"><i class="bi bi-check"></i></a>
+                                            <a href="<?php echo url('/api/booking-action.php?id=' . (int)$b['id'] . '&action=reject'); ?>" class="btn btn-error btn-sm"><i class="bi bi-x"></i></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- My Properties Tab -->
             <div id="tab-properties" style="display:none;">
                 <div class="mb-3">
-                    <a href="/add-property.php" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add New Property</a>
+                    <a href="<?php echo url('/add-property.php'); ?>" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add New Property</a>
                 </div>
                 <?php if (empty($myProperties)): ?>
                     <div class="card p-5 text-center">

@@ -84,7 +84,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i class="bi bi-heart" style="font-size:3rem;color:var(--slate-300);"></i>
                     <h5 class="mt-3">Your wishlist is empty</h5>
                     <p style="color:var(--slate-500);">Save properties you love to find them here later</p>
-                    <a href="/properties.php" class="btn btn-primary">Browse Properties</a>
+                    <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary">Browse Properties</a>
                 </div>
             <?php else: ?>
                 <div class="row g-4">
@@ -103,8 +103,8 @@ require_once __DIR__ . '/includes/header.php';
                                         <span><i class="bi bi-people"></i> <?php echo (int)$p['max_guests']; ?> Guests</span>
                                     </div>
                                     <div class="d-flex gap-2 mt-3">
-                                        <a href="/property-details.php?id=<?php echo (int)$p['id']; ?>" class="btn btn-primary btn-sm flex-grow-1">View Details</a>
-                                        <a href="/api/toggle-wishlist.php?property_id=<?php echo (int)$p['id']; ?>" class="btn btn-error btn-sm"><i class="bi bi-heart-fill"></i></a>
+                                        <a href="<?php echo url('/property-details.php?id=' . (int)$p['id']); ?>" class="btn btn-primary btn-sm flex-grow-1">View Details</a>
+                                        <a href="<?php echo url('/api/toggle-wishlist.php?property_id=' . (int)$p['id']); ?>" class="btn btn-error btn-sm"><i class="bi bi-heart-fill"></i></a>
                                     </div>
                                 </div>
                             </div>

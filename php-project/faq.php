@@ -68,7 +68,7 @@ $categories = ['all', 'Booking', 'Payment', 'Cancellation', 'Features', 'Hosting
                 <h3 class="fw-bold">Still Have Questions?</h3>
                 <p style="color:var(--slate-600);">Our support team is here to help you 24/7</p>
                 <div class="d-flex gap-3 justify-content-center mt-3 flex-wrap">
-                    <a href="/contact.php" class="btn btn-primary btn-lg"><i class="bi bi-headset"></i> Contact Support</a>
+                    <a href="<?php echo url('/contact.php'); ?>" class="btn btn-primary btn-lg"><i class="bi bi-headset"></i> Contact Support</a>
                     <a href="mailto:hello@mehmaanhub.pk" class="btn btn-ghost btn-lg"><i class="bi bi-envelope"></i> Email Us</a>
                 </div>
             </div>

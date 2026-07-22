@@ -186,7 +186,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <p style="color:var(--slate-500);font-size:0.85rem;"><i class="bi bi-geo-alt"></i> <?php echo e($p['city'] . ', ' . $p['area']); ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span style="font-weight:700;color:var(--primary-600);"><?php echo formatPKR($p['price_per_night']); ?>/night</span>
-                                    <a href="/api/delete-property.php?id=<?php echo (int)$p['id']; ?>" class="btn btn-error btn-sm" onclick="return confirm('Delete this property?')"><i class="bi bi-trash"></i></a>
+                                    <a href="<?php echo url('/api/delete-property.php?id=' . (int)$p['id']); ?>" class="btn btn-error btn-sm" onclick="return confirm('Delete this property?')"><i class="bi bi-trash"></i></a>
                                 </div>
                             </div>
                         </div>

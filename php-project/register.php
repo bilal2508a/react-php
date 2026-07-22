@@ -30,7 +30,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- Left Form -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center p-5 order-lg-1 order-2">
                 <div style="width:100%;max-width:450px;">
-                    <a href="/index.php" class="d-flex align-items-center gap-2 text-decoration-none mb-4">
+                    <a href="<?php echo url('/index.php'); ?>" class="d-flex align-items-center gap-2 text-decoration-none mb-4">
                         <div class="d-flex align-items-center justify-content-center" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#14b8a6);color:#fff;font-size:1.25rem;">
                             <i class="bi bi-buildings"></i>
                         </div>
@@ -83,7 +83,7 @@ require_once __DIR__ . '/includes/header.php';
                         <button type="submit" class="btn btn-primary w-100 btn-lg">Create Account</button>
                     </form>
 
-                    <p class="text-center mt-4" style="color:var(--slate-500);">Already have an account? <a href="/login.php" style="color:var(--primary-600);font-weight:600;">Sign In</a></p>
+                    <p class="text-center mt-4" style="color:var(--slate-500);">Already have an account? <a href="<?php echo url('/login.php'); ?>" style="color:var(--primary-600);font-weight:600;">Sign In</a></p>
                 </div>
             </div>
 

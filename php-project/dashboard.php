@@ -151,7 +151,7 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="bi bi-calendar-x" style="font-size:2.5rem;color:var(--slate-300);"></i>
                         <h5 class="mt-3">No bookings yet</h5>
                         <p style="color:var(--slate-500);">Start exploring properties and book your first stay!</p>
-                        <a href="/properties.php" class="btn btn-primary">Browse Properties</a>
+                        <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary">Browse Properties</a>
                     </div>
                 <?php else: ?>
                     <div class="d-flex flex-column gap-3">

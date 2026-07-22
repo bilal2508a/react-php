@@ -25,7 +25,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Payment Methods -->
                     <div class="card p-4 mb-4">
                         <h4 class="fw-bold mb-3"><i class="bi bi-credit-card"></i> Payment Method</h4>
-                        <form method="POST" action="/api/process-payment.php">
+                        <form method="POST" action="<?php echo url('/api/process-payment.php'); ?>">
                             <input type="hidden" name="booking_id" value="<?php echo (int)$booking['id']; ?>">
                             <input type="hidden" name="total_price" id="hiddenTotal" value="<?php echo e($booking['total_price']); ?>">
                             <div class="d-flex flex-column gap-3">

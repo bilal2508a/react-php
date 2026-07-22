@@ -41,9 +41,9 @@ require_once __DIR__ . '/includes/header.php';
         <div class="container-app">
             <!-- Tabs -->
             <div class="d-flex gap-2 mb-4 border-bottom">
-                <a href="/bookings.php?tab=upcoming" class="tab-btn <?php echo $tab === 'upcoming' ? 'active' : ''; ?>">Upcoming</a>
-                <a href="/bookings.php?tab=completed" class="tab-btn <?php echo $tab === 'completed' ? 'active' : ''; ?>">Completed</a>
-                <a href="/bookings.php?tab=cancelled" class="tab-btn <?php echo $tab === 'cancelled' ? 'active' : ''; ?>">Cancelled</a>
+                <a href="<?php echo url('/bookings.php?tab=upcoming'); ?>" class="tab-btn <?php echo $tab === 'upcoming' ? 'active' : ''; ?>">Upcoming</a>
+                <a href="<?php echo url('/bookings.php?tab=completed'); ?>" class="tab-btn <?php echo $tab === 'completed' ? 'active' : ''; ?>">Completed</a>
+                <a href="<?php echo url('/bookings.php?tab=cancelled'); ?>" class="tab-btn <?php echo $tab === 'cancelled' ? 'active' : ''; ?>">Cancelled</a>
             </div>
 
             <!-- Bookings -->
@@ -58,7 +58,7 @@ require_once __DIR__ . '/includes/header.php';
                             No bookings in this category.
                         <?php endif; ?>
                     </p>
-                    <a href="/properties.php" class="btn btn-primary">Browse Properties</a>
+                    <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary">Browse Properties</a>
                 </div>
             <?php else: ?>
                 <div class="d-flex flex-column gap-3">
@@ -89,7 +89,7 @@ require_once __DIR__ . '/includes/header.php';
                                         <span class="badge badge-<?php echo $b['payment_status'] === 'paid' ? 'success' : 'warning'; ?>"><?php echo e(ucfirst($b['payment_status'])); ?></span>
                                     </div>
                                     <?php if ($b['payment_status'] === 'unpaid' && $b['status'] !== 'cancelled'): ?>
-                                        <a href="/payment.php?id=<?php echo (int)$b['id']; ?>" class="btn btn-primary btn-sm mt-2"><i class="bi bi-credit-card"></i> Pay Now</a>
+                                        <a href="<?php echo url('/payment.php?id=' . (int)$b['id']); ?>" class="btn btn-primary btn-sm mt-2"><i class="bi bi-credit-card"></i> Pay Now</a>
                                     <?php endif; ?>
                                 </div>
                             </div>

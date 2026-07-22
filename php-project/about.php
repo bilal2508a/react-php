@@ -122,8 +122,8 @@ $team = [
                 <h2 style="font-size:2rem;font-weight:800;color:#fff;">Join Our Journey</h2>
                 <p style="color:rgba(255,255,255,0.9);font-size:1.1rem;margin-top:0.5rem;">Become part of Pakistan's growing travel community</p>
                 <div class="d-flex gap-3 justify-content-center mt-3 flex-wrap">
-                    <a href="/register.php" class="btn btn-light btn-lg">Get Started</a>
-                    <a href="/contact.php" class="btn btn-outline-light btn-lg">Contact Us</a>
+                    <a href="<?php echo url('/register.php'); ?>" class="btn btn-light btn-lg">Get Started</a>
+                    <a href="<?php echo url('/contact.php'); ?>" class="btn btn-outline-light btn-lg">Contact Us</a>
                 </div>
             </div>
         </div>

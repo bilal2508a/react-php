@@ -45,7 +45,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- Right Form -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center p-5">
                 <div style="width:100%;max-width:400px;">
-                    <a href="/index.php" class="d-flex align-items-center gap-2 text-decoration-none mb-4">
+                    <a href="<?php echo url('/index.php'); ?>" class="d-flex align-items-center gap-2 text-decoration-none mb-4">
                         <div class="d-flex align-items-center justify-content-center" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#14b8a6);color:#fff;font-size:1.25rem;">
                             <i class="bi bi-buildings"></i>
                         </div>
@@ -78,7 +78,7 @@ require_once __DIR__ . '/includes/header.php';
                         <button type="submit" class="btn btn-primary w-100 btn-lg">Sign In</button>
                     </form>
 
-                    <p class="text-center mt-4" style="color:var(--slate-500);">Don't have an account? <a href="/register.php" style="color:var(--primary-600);font-weight:600;">Sign Up</a></p>
+                    <p class="text-center mt-4" style="color:var(--slate-500);">Don't have an account? <a href="<?php echo url('/register.php'); ?>" style="color:var(--primary-600);font-weight:600;">Sign Up</a></p>
 
                     <div class="card p-3 mt-4" style="background:var(--slate-50);">
                         <p style="font-size:0.8rem;color:var(--slate-500);margin:0;"><strong>Demo Admin:</strong> admin@mehmaanhub.pk / admin123</p>

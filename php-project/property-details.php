@@ -43,8 +43,8 @@ $scoreDeg = ($scorePct / 100) * 360;
     <div class="bg-slate py-3">
         <div class="container-app">
             <nav style="font-size:0.85rem;">
-                <a href="/index.php" style="color:var(--slate-500);">Home</a> >
-                <a href="/properties.php" style="color:var(--slate-500);">Properties</a> >
+                <a href="<?php echo url('/index.php'); ?>" style="color:var(--slate-500);">Home</a> >
+                <a href="<?php echo url('/properties.php'); ?>" style="color:var(--slate-500);">Properties</a> >
                 <span style="color:var(--slate-700);"><?php echo e($property['title']); ?></span>
             </nav>
         </div>
@@ -65,7 +65,7 @@ $scoreDeg = ($scorePct / 100) * 360;
                         <span style="color:var(--slate-500);"><i class="bi bi-geo-alt"></i> <?php echo e($property['city'] . ', ' . $property['area']); ?></span>
                     </div>
                 </div>
-                <a href="/booking.php?property_id=<?php echo (int)$property['id']; ?>" class="btn btn-primary btn-lg">
+                <a href="<?php echo url('/booking.php?property_id=' . (int)$property['id']); ?>" class="btn btn-primary btn-lg">
                     <i class="bi bi-calendar-check"></i> Book Now
                 </a>
             </div>
@@ -215,7 +215,7 @@ $scoreDeg = ($scorePct / 100) * 360;
                             <span style="font-weight:700;">Total</span>
                             <span id="totalAmount" style="font-weight:800;color:var(--primary-600);">PKR 0</span>
                         </div>
-                        <a href="/booking.php?property_id=<?php echo (int)$property['id']; ?>" class="btn btn-primary w-100 btn-lg">
+                        <a href="<?php echo url('/booking.php?property_id=' . (int)$property['id']); ?>" class="btn btn-primary w-100 btn-lg">
                             <i class="bi bi-calendar-check"></i> Book Now
                         </a>
                         <p class="text-center mt-2" style="font-size:0.8rem;color:var(--slate-500);">You won't be charged yet</p>

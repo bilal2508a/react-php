@@ -12,7 +12,7 @@ foreach ($propertyTypes as $pt) {
     }
 }
 ?>
-<a href="/property-details.php?id=<?php echo (int)$p['id']; ?>" class="property-card">
+<a href="<?php echo url('/property-details.php?id=' . (int)$p['id']); ?>" class="property-card">
     <div class="property-card-image">
         <img src="<?php echo e($firstImage); ?>" alt="<?php echo e($p['title']); ?>" loading="lazy">
         <?php if (!empty($p['is_featured'])): ?>

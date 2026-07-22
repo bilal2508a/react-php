@@ -66,10 +66,10 @@ $faqs = [
                 <h1 class="hero-title animate-fadeInUp">Find Your Perfect Stay in Pakistan</h1>
                 <p class="hero-subtitle animate-fadeInUp">Discover verified properties across Pakistan with AI-powered recommendations. From Hunza valleys to Karachi beaches, your perfect stay awaits.</p>
                 <div class="d-flex gap-3 flex-wrap animate-fadeInUp">
-                    <a href="/properties.php" class="btn btn-primary btn-lg">
+                    <a href="<?php echo url('/properties.php'); ?>" class="btn btn-primary btn-lg">
                         <i class="bi bi-search"></i> Explore Properties
                     </a>
-                    <a href="/register.php" class="btn btn-light btn-lg glass">
+                    <a href="<?php echo url('/register.php'); ?>" class="btn btn-light btn-lg glass">
                         <i class="bi bi-person-plus"></i> Get Started
                     </a>
                 </div>
@@ -106,7 +106,7 @@ $faqs = [
             <div class="row g-4">
                 <?php foreach ($cities as $city): ?>
                     <div class="col-6 col-md-4 col-lg-2">
-                        <a href="/properties.php?city=<?php echo urlencode($city['name']); ?>" class="text-decoration-none">
+                        <a href="<?php echo url('/properties.php?city=' . urlencode($city['name'])); ?>" class="text-decoration-none">
                             <div class="card h-100 text-center p-3 animate-fadeInUp">
                                 <img src="<?php echo e($city['image']); ?>" alt="<?php echo e($city['name']); ?>" style="width:100%;height:120px;object-fit:cover;border-radius:10px;">
                                 <h6 style="font-weight:700;color:var(--slate-900);margin-top:0.75rem;"><?php echo e($city['name']); ?></h6>
@@ -127,7 +127,7 @@ $faqs = [
                     <h2 class="section-title">Featured Properties</h2>
                     <p class="section-subtitle mb-0">Handpicked stays for the best experience</p>
                 </div>
-                <a href="/properties.php" class="btn btn-ghost">View All <i class="bi bi-arrow-right"></i></a>
+                <a href="<?php echo url('/properties.php'); ?>" class="btn btn-ghost">View All <i class="bi bi-arrow-right"></i></a>
             </div>
             <div class="row g-4">
                 <?php foreach ($featuredProperties as $p): ?>
@@ -147,7 +147,7 @@ $faqs = [
             <div class="row g-4">
                 <?php foreach ($propertyTypes as $pt): ?>
                     <div class="col-6 col-lg-3">
-                        <a href="/properties.php?type=<?php echo urlencode($pt['value']); ?>" class="text-decoration-none">
+                        <a href="<?php echo url('/properties.php?type=' . urlencode($pt['value'])); ?>" class="text-decoration-none">
                             <div class="card h-100 text-center p-4 animate-fadeInUp">
                                 <i class="bi <?php echo e($pt['icon']); ?>" style="font-size:2.5rem;color:var(--primary-600);"></i>
                                 <h5 style="font-weight:700;color:var(--slate-900);margin-top:0.75rem;"><?php echo e($pt['label']); ?></h5>
@@ -287,8 +287,8 @@ $faqs = [
                 <h2 style="font-size:2rem;font-weight:800;color:#fff;">Ready to Find Your Perfect Stay?</h2>
                 <p style="color:rgba(255,255,255,0.9);font-size:1.1rem;margin-top:0.5rem;">Join thousands of happy travelers across Pakistan</p>
                 <div class="d-flex gap-3 justify-content-center mt-3 flex-wrap">
-                    <a href="/register.php" class="btn btn-light btn-lg"><i class="bi bi-person-plus"></i> Sign Up Now</a>
-                    <a href="/properties.php" class="btn btn-outline-light btn-lg"><i class="bi bi-search"></i> Browse Properties</a>
+                    <a href="<?php echo url('/register.php'); ?>" class="btn btn-light btn-lg"><i class="bi bi-person-plus"></i> Sign Up Now</a>
+                    <a href="<?php echo url('/properties.php'); ?>" class="btn btn-outline-light btn-lg"><i class="bi bi-search"></i> Browse Properties</a>
                 </div>
             </div>
         </div>

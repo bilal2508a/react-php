@@ -2,6 +2,13 @@
 // Mehmaan Hub - Configuration File
 // Database constants and helper functions
 
+// Base URL — auto-detects subdirectory so paths work under
+// both http://localhost/ and http://localhost/php-project/
+$_scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+$_base = rtrim(preg_replace('#/[^/]+\.php$#', '', $_scriptDir), '/');
+define('BASE_URL', $_base);
+unset($_scriptDir, $_base);
+
 // Database Configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'mehmaan_hub');
@@ -114,15 +121,31 @@ function e($str) {
     return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-// Redirect to a path
+// Redirect to a path (prepends BASE_URL if path starts with /)
 function redirect($path) {
+    if ($path[0] === '/' && $path[0] !== BASE_URL) {
+        $path = BASE_URL . $path;
+    }
     header('Location: ' . $path);
     exit;
 }
 
-// Get current path
+// Build a URL relative to BASE_URL
+function url($path = '/') {
+    if (strpos($path, 'http') === 0 || strpos($path, '//') === 0) {
+        return $path;
+    }
+    return BASE_URL . $path;
+}
+
+// Get current path (relative to BASE_URL)
 function currentPath() {
-    return parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+    $full = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+    if (BASE_URL !== '' && strpos($full, BASE_URL) === 0) {
+        $full = substr($full, strlen(BASE_URL));
+    }
+    if ($full === '') $full = '/';
+    return $full;
 }
 
 // Check if a nav link is active
