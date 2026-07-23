@@ -47,11 +47,13 @@ If your MySQL has a different password, change `DB_PASS` in this file.
 
 ## Login Credentials
 
-| Role  | Email                   | Password   |
-|-------|-------------------------|------------|
-| Admin | admin@mehmaanhub.pk     | admin123   |
-| Owner | owner@mehmaanhub.pk     | admin123   |
-| Tenant| Register a new account  |            |
+| Role   | Email                  | Username | Password   |
+|--------|------------------------|----------|------------|
+| Admin  | admin@mehmaanhub.pk    | admin    | admin123   |
+| Owner  | owner@mehmaanhub.pk    | owner    | admin123   |
+| Tenant | tenant@mehmaanhub.pk   | tenant   | admin123   |
+
+You can log in using either your **email** or **username**.
 
 ## Features
 

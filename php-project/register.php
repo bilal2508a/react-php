@@ -5,6 +5,7 @@ require_once __DIR__ . '/includes/auth.php';
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['full_name'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $role = $_POST['role'] ?? 'tenant';
@@ -13,23 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (strlen($password) < 6) {
         $error = 'Password must be at least 6 characters';
-    } elseif (signUp($email, $password, $fullName, $role)) {
+    } elseif (strlen($username) < 3) {
+        $error = 'Username must be at least 3 characters';
+    } elseif (signUp($email, $password, $fullName, $role, $username)) {
         $user = currentUser();
         redirect(dashboardUrlForRole($user['role']));
     } else {
-        $error = 'Email already registered. Please use a different email or sign in.';
+        $error = 'Email or username already registered. Please use different credentials.';
     }
 }
 
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/header-minimal.php';
 ?>
 
-<main class="pt-nav" style="min-height:100vh;">
+<main style="min-height:100vh;">
     <div class="container-fluid">
-        <div class="row" style="min-height:calc(100vh - 72px);">
+        <div class="row" style="min-height:100vh;">
             <!-- Left Form -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center p-5 order-lg-1 order-2">
-                <div style="width:100%;max-width:450px;">
+                <div style="width:100%;max-width:400px;">
                     <a href="<?php echo url('/index.php'); ?>" class="d-flex align-items-center gap-2 text-decoration-none mb-4">
                         <div class="d-flex align-items-center justify-content-center" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#14b8a6);color:#fff;font-size:1.25rem;">
                             <i class="bi bi-buildings"></i>
@@ -44,7 +47,7 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="alert alert-danger mt-3"><?php echo e($error); ?></div>
                     <?php endif; ?>
 
-                    <form method="POST" class="mt-4">
+                    <form method="POST" class="mt-4" autocomplete="off">
                         <!-- Role Selection -->
                         <label class="label">I want to:</label>
                         <div class="row g-2 mb-3">
@@ -73,12 +76,21 @@ require_once __DIR__ . '/includes/header.php';
                             <input type="text" name="full_name" class="input" placeholder="John Doe" required>
                         </div>
                         <div class="mb-3">
+                            <label class="label">Username</label>
+                            <input type="text" name="username" class="input" placeholder="johndoe" required autocomplete="off">
+                        </div>
+                        <div class="mb-3">
                             <label class="label">Email Address</label>
-                            <input type="email" name="email" class="input" placeholder="you@example.com" required>
+                            <input type="email" name="email" class="input" placeholder="you@example.com" required autocomplete="off">
                         </div>
                         <div class="mb-3">
                             <label class="label">Password</label>
-                            <input type="password" name="password" class="input" placeholder="At least 6 characters" required>
+                            <div class="position-relative">
+                                <input type="password" name="password" id="passwordField" class="input" placeholder="At least 6 characters" required autocomplete="new-password" style="padding-right:44px;">
+                                <button type="button" onclick="togglePassword('passwordField', 'pwIcon')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--slate-400);padding:4px;">
+                                    <i class="bi bi-eye" id="pwIcon" style="font-size:1.1rem;"></i>
+                                </button>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 btn-lg">Create Account</button>
                     </form>
@@ -112,4 +124,20 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </main>
 
-<?php require __DIR__ . '/includes/footer.php'; ?>
+<script>
+function togglePassword(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+</script>
+
+<?php require __DIR__ . '/includes/footer-minimal.php'; ?>

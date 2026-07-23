@@ -43,9 +43,11 @@ $user = currentUser();
                         <i class="bi bi-chevron-down" style="font-size:0.75rem;color:#64748b;"></i>
                     </button>
                     <div id="userMenu" class="user-menu">
-                        <a href="<?php echo e(url(dashboardUrlForRole($user['role']))); ?>" class="dropdown-item-mh">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
+                        <?php if ($user['role'] === 'admin'): ?>
+                            <a href="<?php echo e(url(dashboardUrlForRole($user['role']))); ?>" class="dropdown-item-mh">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        <?php endif; ?>
                         <?php if ($user['role'] === 'tenant'): ?>
                             <a href="<?php echo url('/bookings.php'); ?>" class="dropdown-item-mh">
                                 <i class="bi bi-calendar-check"></i> My Bookings
@@ -55,6 +57,9 @@ $user = currentUser();
                             </a>
                         <?php endif; ?>
                         <?php if ($user['role'] === 'owner'): ?>
+                            <a href="<?php echo e(url(dashboardUrlForRole($user['role']))); ?>" class="dropdown-item-mh">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
                             <a href="<?php echo url('/add-property.php'); ?>" class="dropdown-item-mh">
                                 <i class="bi bi-plus-circle"></i> Add Property
                             </a>

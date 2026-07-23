@@ -53,23 +53,84 @@ require_once __DIR__ . '/includes/header.php';
     <section class="gradient-primary-light py-5">
         <div class="container-app">
             <h1 class="fw-bold">My Profile</h1>
-            <p style="color:var(--slate-600);">Manage your account and preferences</p>
+            <p style="color:var(--slate-600);">View and manage your account information</p>
         </div>
     </section>
 
     <section class="py-5">
         <div class="container-app">
+            <?php if ($success): ?>
+                <div class="alert alert-success"><?php echo e($success); ?></div>
+            <?php endif; ?>
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?php echo e($error); ?></div>
+            <?php endif; ?>
+
             <div class="row">
                 <div class="col-lg-8">
-                    <?php if ($success): ?>
-                        <div class="alert alert-success"><?php echo e($success); ?></div>
-                    <?php endif; ?>
-                    <?php if ($error): ?>
-                        <div class="alert alert-danger"><?php echo e($error); ?></div>
-                    <?php endif; ?>
+                    <!-- Profile View (default) -->
+                    <div class="card p-4 mb-4" id="profileView">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold mb-0"><i class="bi bi-person-circle"></i> Profile Information</h4>
+                            <button onclick="showEditForm()" class="btn btn-primary"><i class="bi bi-pencil"></i> Edit Profile</button>
+                        </div>
 
-                    <div class="card p-4 mb-4">
-                        <h4 class="fw-bold mb-3"><i class="bi bi-person"></i> Profile Information</h4>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Full Name</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;"><?php echo e($user['full_name']); ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Email Address</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;"><?php echo e($user['email']); ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Username</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;"><?php echo e($user['username'] ?? 'Not set'); ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Phone Number</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;"><?php echo e($user['phone'] ?? 'Not set'); ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Role</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;">
+                                        <span class="badge badge-primary" style="font-size:0.9rem;"><?php echo e(ucfirst($user['role'])); ?></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Member Since</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;"><?php echo formatDate($user['created_at']); ?></p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3 rounded" style="background:var(--slate-50);">
+                                    <p style="color:var(--slate-500);font-size:0.85rem;margin:0 0 4px 0;">Travel Personality</p>
+                                    <p style="font-weight:700;font-size:1.1rem;margin:0;text-transform:capitalize;">
+                                        <?php echo e($user['travel_personality']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Form (hidden by default) -->
+                    <div class="card p-4 mb-4" id="editForm" style="display:none;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold mb-0"><i class="bi bi-pencil"></i> Edit Profile</h4>
+                            <button onclick="cancelEdit()" class="btn btn-ghost"><i class="bi bi-x-lg"></i> Cancel</button>
+                        </div>
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="label">Full Name</label>
@@ -79,6 +140,11 @@ require_once __DIR__ . '/includes/header.php';
                                 <label class="label">Email Address</label>
                                 <input type="email" class="input" value="<?php echo e($user['email']); ?>" disabled>
                                 <small style="color:var(--slate-400);">Email cannot be changed</small>
+                            </div>
+                            <div class="mb-3">
+                                <label class="label">Username</label>
+                                <input type="text" class="input" value="<?php echo e($user['username'] ?? ''); ?>" disabled>
+                                <small style="color:var(--slate-400);">Username cannot be changed</small>
                             </div>
                             <div class="mb-3">
                                 <label class="label">Phone Number</label>
@@ -142,6 +208,10 @@ require_once __DIR__ . '/includes/header.php';
                             <p style="font-weight:600;font-size:0.9rem;"><?php echo e($user['email']); ?></p>
                         </div>
                         <div class="mb-2">
+                            <p style="color:var(--slate-500);font-size:0.85rem;margin:0;">Username</p>
+                            <p style="font-weight:600;font-size:0.9rem;"><?php echo e($user['username'] ?? 'Not set'); ?></p>
+                        </div>
+                        <div class="mb-2">
                             <p style="color:var(--slate-500);font-size:0.85rem;margin:0;">Phone</p>
                             <p style="font-weight:600;font-size:0.9rem;"><?php echo e($user['phone'] ?? 'Not set'); ?></p>
                         </div>
@@ -159,5 +229,18 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </section>
 </main>
+
+<script>
+function showEditForm() {
+    document.getElementById('profileView').style.display = 'none';
+    document.getElementById('editForm').style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+    document.getElementById('editForm').style.display = 'none';
+    document.getElementById('profileView').style.display = '';
+}
+</script>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(100) DEFAULT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(50) DEFAULT NULL,
     avatar_url VARCHAR(500) DEFAULT NULL,
@@ -98,12 +99,16 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 
 -- Seed Admin User
 -- Password: admin123 (bcrypt hash)
-INSERT INTO users (full_name, email, password, phone, travel_personality, role) VALUES
-('Admin User', 'admin@mehmaanhub.pk', '$2y$10$N9qo8uLOickgx2ZMRZoMy.MQDq/1JoC9r0aFyLZ5pQXJmR5yLZ5pQ', '+92 300 1234567', 'explorer', 'admin');
+INSERT INTO users (full_name, email, username, password, phone, travel_personality, role) VALUES
+('Admin User', 'admin@mehmaanhub.pk', 'admin', '$2y$10$N9qo8uLOickgx2ZMRZoMy.MQDq/1JoC9r0aFyLZ5pQXJmR5yLZ5pQ', '+92 300 1234567', 'explorer', 'admin');
 
 -- Seed Owner User
-INSERT INTO users (full_name, email, password, phone, travel_personality, role) VALUES
-('Property Owner', 'owner@mehmaanhub.pk', '$2y$10$N9qo8uLOickgx2ZMRZoMy.MQDq/1JoC9r0aFyLZ5pQXJmR5yLZ5pQ', '+92 321 9876543', 'adventurer', 'owner');
+INSERT INTO users (full_name, email, username, password, phone, travel_personality, role) VALUES
+('Property Owner', 'owner@mehmaanhub.pk', 'owner', '$2y$10$N9qo8uLOickgx2ZMRZoMy.MQDq/1JoC9r0aFyLZ5pQXJmR5yLZ5pQ', '+92 321 9876543', 'adventurer', 'owner');
+
+-- Seed Tenant User
+INSERT INTO users (full_name, email, username, password, phone, travel_personality, role) VALUES
+('Demo Tenant', 'tenant@mehmaanhub.pk', 'tenant', '$2y$10$N9qo8uLOickgx2ZMRZoMy.MQDq/1JoC9r0aFyLZ5pQXJmR5yLZ5pQ', '+92 333 5555555', 'explorer', 'tenant');
 
 -- Seed Properties (10 properties across Pakistani cities)
 INSERT INTO properties (title, description, city, area, property_type, price_per_night, bedrooms, bathrooms, max_guests, amenities, images, rating, review_count, owner_id, is_featured) VALUES

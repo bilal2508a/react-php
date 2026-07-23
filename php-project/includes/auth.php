@@ -32,10 +32,10 @@ function requireRole($role) {
     }
 }
 
-// Sign in user with email and password
-function signIn($email, $password) {
-    $stmt = db()->prepare('SELECT * FROM users WHERE email = ?');
-    $stmt->execute([$email]);
+// Sign in user with email or username and password
+function signIn($loginInput, $password) {
+    $stmt = db()->prepare('SELECT * FROM users WHERE email = ? OR username = ?');
+    $stmt->execute([$loginInput, $loginInput]);
     $user = $stmt->fetch();
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
@@ -45,16 +45,24 @@ function signIn($email, $password) {
 }
 
 // Sign up new user
-function signUp($email, $password, $fullName, $role) {
+function signUp($email, $password, $fullName, $role, $username = '') {
     // Check for duplicate email
     $stmt = db()->prepare('SELECT id FROM users WHERE email = ?');
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
         return false;
     }
+    // Check for duplicate username
+    if ($username) {
+        $stmt = db()->prepare('SELECT id FROM users WHERE username = ?');
+        $stmt->execute([$username]);
+        if ($stmt->fetch()) {
+            return false;
+        }
+    }
     $hashed = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = db()->prepare('INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)');
-    $stmt->execute([$fullName, $email, $hashed, $role]);
+    $stmt = db()->prepare('INSERT INTO users (full_name, email, password, role, username) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$fullName, $email, $hashed, $role, $username]);
     $_SESSION['user_id'] = db()->lastInsertId();
     return true;
 }
@@ -72,6 +80,6 @@ function dashboardUrlForRole($role) {
         case 'owner':
             return '/owner-dashboard.php';
         default:
-            return '/dashboard.php';
+            return '/profile.php';
     }
 }

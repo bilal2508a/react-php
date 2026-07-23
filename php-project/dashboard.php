@@ -10,6 +10,9 @@ if ($user['role'] === 'owner') {
 if ($user['role'] === 'admin') {
     redirect('/admin.php');
 }
+if ($user['role'] === 'tenant') {
+    redirect('/profile.php');
+}
 
 // Stats
 $stmt = db()->prepare('SELECT COUNT(*) FROM bookings WHERE user_id = ?');
